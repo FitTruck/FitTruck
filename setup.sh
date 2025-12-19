@@ -87,20 +87,8 @@ cd ..
 if [ -f "requirements.txt" ]; then
     echo "Installing requirements.txt from $(pwd)..."
 
-    # Install nvdiffrast first using the helper (build isolation disabled)
-    if [ -f "./scripts/install_nvdiffrast.sh" ]; then
-        echo "Running nvdiffrast installer helper..."
-        chmod +x ./scripts/install_nvdiffrast.sh || true
-        if ./scripts/install_nvdiffrast.sh; then
-            echo "nvdiffrast installed successfully (or already present)."
-        else
-            echo "Warning: nvdiffrast helper failed. Continuing with other installs."
-        fi
-    else
-        echo "No nvdiffrast helper found at ./scripts/install_nvdiffrast.sh; skipping nvdiffrast install."
-    fi
-
     pip install -r requirements.txt
+    pip install git+https://github.com/NVlabs/nvdiffrast.git --no-build-isolation
 else
     echo "No requirements.txt found in $(pwd)."
 fi
